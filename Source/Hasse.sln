@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hasse.Web", "Hasse.Web\Hasse.Web.csproj", "{2BC599AF-E916-4C6F-AC7F-796B73059AA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hasse.Web.Tests", "Hasse.Web.Tests\Hasse.Web.Tests.csproj", "{F9D0542E-A877-498C-8037-78223789FEEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hasse.Models", "Hasse.Models\Hasse.Models.csproj", "{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BC599AF-E916-4C6F-AC7F-796B73059AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC599AF-E916-4C6F-AC7F-796B73059AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC599AF-E916-4C6F-AC7F-796B73059AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC599AF-E916-4C6F-AC7F-796B73059AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9D0542E-A877-498C-8037-78223789FEEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9D0542E-A877-498C-8037-78223789FEEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9D0542E-A877-498C-8037-78223789FEEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9D0542E-A877-498C-8037-78223789FEEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
