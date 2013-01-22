@@ -129,17 +129,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\FacebookAuthorizationProvider.cs" />
-    <Compile Include="Controllers\GithubAuthorizationProvider.cs" />
-    <Compile Include="Controllers\GoogleAuthorizationProvider.cs" />
-    <Compile Include="Controllers\IAuthorizationProvider.cs" />
-    <Compile Include="Controllers\InMemoryTokenManager.cs" />
-    <Compile Include="Controllers\MicrosoftLiveAuthorizationProvider.cs" />
-    <Compile Include="Controllers\OAuth1AuthorizationProvider.cs" />
-    <Compile Include="Controllers\OAuth2AuthorizationProvider.cs" />
-    <Compile Include="Controllers\TwitterAuthorizationProvider.cs" />
+    <Compile Include="Authorization\FacebookAuthorizationProvider.cs" />
+    <Compile Include="Authorization\GithubAuthorizationProvider.cs" />
+    <Compile Include="Authorization\GoogleAuthorizationProvider.cs" />
+    <Compile Include="Authorization\IAuthorizationProvider.cs" />
+    <Compile Include="Authorization\InMemoryTokenManager.cs" />
+    <Compile Include="Authorization\MicrosoftLiveAuthorizationProvider.cs" />
+    <Compile Include="Authorization\OAuth1AuthorizationProvider.cs" />
+    <Compile Include="Authorization\OAuth2AuthorizationProvider.cs" />
+    <Compile Include="Authorization\TwitterAuthorizationProvider.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\YahooAuthorizationProvider.cs" />
+    <Compile Include="Authorization\YahooAuthorizationProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

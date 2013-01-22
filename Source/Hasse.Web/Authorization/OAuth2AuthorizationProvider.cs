@@ -8,7 +8,7 @@ using DotNetOpenAuth.OAuth2;
 using Hasse.Web.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     abstract class OAuth2AuthorizationProvider : IAuthorizationProvider
     {

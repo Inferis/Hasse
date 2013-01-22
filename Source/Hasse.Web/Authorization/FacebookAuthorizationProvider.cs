@@ -1,8 +1,6 @@
-﻿using System;
-using DotNetOpenAuth.OAuth2;
-using Hasse.Web.Models;
+﻿using Hasse.Web.Models;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     class FacebookAuthorizationProvider : OAuth2AuthorizationProvider
     {

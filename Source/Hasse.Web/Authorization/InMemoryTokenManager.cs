@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DotNetOpenAuth.OAuth.ChannelElements;
 using DotNetOpenAuth.OAuth.Messages;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     internal class InMemoryTokenManager : IConsumerTokenManager
     {

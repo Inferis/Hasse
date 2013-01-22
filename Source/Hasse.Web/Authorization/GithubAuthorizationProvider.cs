@@ -1,6 +1,6 @@
 ﻿using Hasse.Web.Models;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     class GithubAuthorizationProvider : OAuth2AuthorizationProvider {
         public GithubAuthorizationProvider() : base("github", "https://github.com/login/oauth/authorize", "https://github.com/login/oauth/access_token", "decff741693c909909cc", "faabebc90edec3a85bafeaa88a565e4deafe3d46") { }

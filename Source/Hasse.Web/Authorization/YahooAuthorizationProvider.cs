@@ -4,7 +4,7 @@ using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
 using Hasse.Web.Models;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     class YahooAuthorizationProvider : OAuth1AuthorizationProvider {
         public YahooAuthorizationProvider() : base("yahoo", "dj0yJmk9M3dHQzltYVl3YW8zJmQ9WVdrOU9YRnhSMWRJTjJzbWNHbzlNalUwTVRjNE5qSS0mcz1jb25zdW1lcnNlY3JldCZ4PTdm", "604cce34cec7e069ed3a0a4b70aa62bf0e1b9c35") { }

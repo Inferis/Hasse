@@ -3,7 +3,7 @@ using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
 using Hasse.Web.Models;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     class TwitterAuthorizationProvider : OAuth1AuthorizationProvider
     {

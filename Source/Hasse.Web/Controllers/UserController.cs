@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using DotNetOpenAuth.Messaging;
+using Hasse.Web.Authorization;
 using Hasse.Web.Models;
 
 namespace Hasse.Web.Controllers

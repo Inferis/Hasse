@@ -1,9 +1,6 @@
-﻿using System.IO;
-using System.Net;
-using Hasse.Web.Models;
-using Newtonsoft.Json.Linq;
+﻿using Hasse.Web.Models;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     class GoogleAuthorizationProvider : OAuth2AuthorizationProvider
     {

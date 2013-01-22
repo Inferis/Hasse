@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using DotNetOpenAuth.OAuth2;
-using Hasse.Web.Models;
+﻿using Hasse.Web.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     class MicrosoftLiveAuthorizationProvider : OAuth2AuthorizationProvider {
         public MicrosoftLiveAuthorizationProvider()

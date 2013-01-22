@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Hasse.Web.Models;
 
-namespace Hasse.Web.Controllers
+namespace Hasse.Web.Authorization
 {
     public interface IAuthorizationProvider
     {
