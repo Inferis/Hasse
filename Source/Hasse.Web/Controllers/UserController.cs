@@ -11,45 +11,52 @@ namespace Hasse.Web.Controllers
 {
     public class UserController : Controller
     {
-        public static readonly string[] ScopeNeeded = { "email", "publish_stream" };
-
-        private WebServerClient FacebookClient()
+        public static readonly IAuthorizationProvider[] Providers = { new FacebookAuthorizationProvider(), new GoogleAuthorizationProvider() };
+        private IAuthorizationProvider GetProvider(string id)
         {
-            var descr = new AuthorizationServerDescription {
-                TokenEndpoint = new Uri("https://graph.facebook.com/oauth/access_token"),
-                AuthorizationEndpoint = new Uri("https://graph.facebook.com/oauth/authorize")
-            };
-
-            var client = new WebServerClient(descr) {
-                ClientIdentifier = "335994424835",
-                ClientCredentialApplicator = ClientCredentialApplicator.PostParameter("01832afd7614f05840b908322377fe63"),
-            };
-
-            return client;
+            return Providers.FirstOrDefault(x => x.Id == id);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            var client = FacebookClient();
-            var uri = new Uri(Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = "facebook" }));
-            return client.PrepareRequestUserAuthorization(ScopeNeeded, uri).AsActionResult();
+            var provider = GetProvider(id);
+            if (provider == null)
+                return View(Providers);
+
+            var uri = new Uri(Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = provider.Id }));
+            return provider.GetOAuthClient()
+                .PrepareRequestUserAuthorization(provider.Scope, uri)
+                .AsActionResult();
         }
-
-
 
         public ActionResult OAuthed(string id)
         {
-            if (id == "facebook") {
-                var client = FacebookClient();
-                var state = client.ProcessUserAuthorization();
-                if (state != null) {
-                    var graph = new Facebook.FacebookClient(state.AccessToken);
-                    var me = graph.Get<dynamic>("me");
-                    return View(new AuthModel { AccessToken = state.AccessToken, Name = me.name, Email = me.email });
-                }
+            var provider = GetProvider(id);
+            if (provider == null)
+                return HttpNotFound();
+
+            var state = provider.GetOAuthClient().ProcessUserAuthorization();
+            AuthModel model = null;
+            if (state != null && !string.IsNullOrEmpty(state.AccessToken)) {
+                // todo register access token
+                model = provider.GetAuthInfo(state.AccessToken);
             }
 
-            return View();
+            if (model == null)
+                return HttpNotFound();
+
+            TempData["AuthModel"] = model;
+            return RedirectToAction("Info");
+        }
+
+        public ActionResult Info()
+        {
+            var model = TempData["AuthModel"] as AuthModel;
+            if (model == null) {
+                return HttpNotFound();
+            }
+
+            return View(model);
         }
     }
 

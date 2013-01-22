@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Hasse.Web.Controllers.IAuthorizationProvider>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>choices</title>
+    </head>
+    <body>
+        @foreach (var provider in Model) {
+            <div>   
+                @Html.ActionLink(provider.Id, "Index", new { id = provider.Id });
+            </div>
+        }
+    </body>
+</html>
