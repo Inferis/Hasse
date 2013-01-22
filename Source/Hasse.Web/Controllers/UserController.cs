@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using DotNetOpenAuth.Messaging;
-using DotNetOpenAuth.OAuth2;
 using Hasse.Web.Models;
 
 namespace Hasse.Web.Controllers
 {
     public class UserController : Controller
     {
-        public static readonly IAuthorizationProvider[] Providers = { new FacebookAuthorizationProvider(), new GoogleAuthorizationProvider() };
+        public static readonly IAuthorizationProvider[] Providers = {
+                                                                        new FacebookAuthorizationProvider(), 
+                                                                        new GoogleAuthorizationProvider(),
+                                                                        new MicrosoftLiveAuthorizationProvider(), 
+                                                                        new YahooAuthorizationProvider(), 
+                                                                        new TwitterAuthorizationProvider(), 
+                                                                        new GithubAuthorizationProvider(), 
+                                                                    };
         private IAuthorizationProvider GetProvider(string id)
         {
             return Providers.FirstOrDefault(x => x.Id == id);
@@ -23,10 +27,7 @@ namespace Hasse.Web.Controllers
             if (provider == null)
                 return View(Providers);
 
-            var uri = new Uri(Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = provider.Id }));
-            return provider.GetOAuthClient()
-                .PrepareRequestUserAuthorization(provider.Scope, uri)
-                .AsActionResult();
+            return provider.StartAuthorization(x => Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = x }));
         }
 
         public ActionResult OAuthed(string id)
@@ -35,11 +36,11 @@ namespace Hasse.Web.Controllers
             if (provider == null)
                 return HttpNotFound();
 
-            var state = provider.GetOAuthClient().ProcessUserAuthorization();
+            var accessToken = provider.FinishAuthorization();
             AuthModel model = null;
-            if (state != null && !string.IsNullOrEmpty(state.AccessToken)) {
+            if (!string.IsNullOrEmpty(accessToken)) {
                 // todo register access token
-                model = provider.GetAuthInfo(state.AccessToken);
+                model = provider.GetAuthInfo(accessToken);
             }
 
             if (model == null)
