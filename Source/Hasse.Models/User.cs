@@ -1,5 +1,8 @@
-﻿namespace Hasse.Models
+﻿using Newtonsoft.Json;
+
+namespace Hasse.Models
 {
+    [JsonObject(IsReference = true)]
     public class User
     {
         public string Name { get; set; }
