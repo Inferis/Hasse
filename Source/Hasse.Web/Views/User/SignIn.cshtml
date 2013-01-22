@@ -1,0 +1,29 @@
+﻿@model Hasse.Web.Models.User.SigninViewModel
+
+@{
+    ViewBag.Title = "Sign in";
+    Layout = "~/Views/Shared/SiteLayout.cshtml";
+}
+
+<h2>Sign in</h2>
+
+<p>Je kan snel-inloggen met de volgende diensten:</p>
+
+<ul>
+    @foreach (var provider in Model.Providers) {
+        <li>@Html.ActionLink(provider.Name, "Signin", new { id = provider.Id }, new { @class = "provider " + provider.Id })</li>
+    }
+</ul>
+
+<p>Je kan ook inloggen via kindjes.net:</p>
+@using(Html.BeginForm("Signin", "User", FormMethod.Post)) {
+    <p>
+    @Html.LabelFor(x => x.Email) @Html.TextBoxFor(m => m.Email);
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Password) @Html.PasswordFor(m => m.Password);
+    </p>
+    <p>
+        <input type="submit" value="Inloggen"/>
+    </p>
+}

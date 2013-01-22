@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comment.cs" />
+    <Compile Include="DenormalizedReference.cs" />
     <Compile Include="Identifiable.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="ImageParagraph.cs" />

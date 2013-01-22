@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Raven.Client.Document;
+using Raven.Client.Indexes;
 
 namespace Hasse.Web
 {
@@ -12,6 +15,8 @@ namespace Hasse.Web
     // visit http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static DocumentStore Store;
+        
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -19,6 +24,16 @@ namespace Hasse.Web
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            InitializeDocumentStore();
+        }
+
+        private void InitializeDocumentStore()
+        {
+            Store = new DocumentStore { ConnectionStringName = "RavenDB" };
+            Store.Initialize();
+
+            IndexCreation.CreateIndexes(Assembly.GetCallingAssembly(), Store);
         }
     }
 }

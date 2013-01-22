@@ -2,6 +2,7 @@
 {
     public class AuthModel
     {
+        public string ProviderId { get; set; }
         public string Id { get; set; }
         public string AccessToken { get; set; }
         public string Name { get; set; }

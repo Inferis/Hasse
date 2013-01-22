@@ -18,7 +18,7 @@ namespace Hasse.Models
         public DateTime PostDate { get; set; }
         public bool Visible { get; set; }
 
-        public User Author { get; set; }
+        public DenormalizedReference<User> Author { get; set; }
         public DateTimeOffset CreatedDate { get; private set; }
         public DateTimeOffset UpdatedDate { get; set; }
         

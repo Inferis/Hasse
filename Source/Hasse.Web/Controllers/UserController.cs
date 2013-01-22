@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using DotNetOpenAuth.Messaging;
+using Hasse.Models;
 using Hasse.Web.Authorization;
 using Hasse.Web.Models;
+using Hasse.Web.Models.User;
+using Hasse.Web.Resources;
 
 namespace Hasse.Web.Controllers
 {
@@ -22,11 +24,19 @@ namespace Hasse.Web.Controllers
             return Providers.FirstOrDefault(x => x.Id == id);
         }
 
-        public ActionResult Index(string id)
+        #region Signin
+        public ActionResult SignIn(string id)
         {
             var provider = GetProvider(id);
-            if (provider == null)
-                return View(Providers);
+            if (provider == null) {
+                var model = new SigninViewModel() {
+                    Providers = Providers.Select(x => new ProviderViewModel() {
+                        Id = x.Id,
+                        Name = Translations.ResourceManager.GetString("provider_" + x.Id + "_name", Translations.Culture)
+                    }).ToList()
+                };
+                return View(model);
+            }
 
             return provider.StartAuthorization(x => Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = x }));
         }
@@ -34,21 +44,60 @@ namespace Hasse.Web.Controllers
         public ActionResult OAuthed(string id)
         {
             var provider = GetProvider(id);
-            if (provider == null)
-                return HttpNotFound();
-
-            var accessToken = provider.FinishAuthorization();
-            AuthModel model = null;
-            if (accessToken != null && !string.IsNullOrEmpty(accessToken.Item1)) {
-                // todo register access token
-                model = provider.GetAuthInfo(accessToken.Item1);
+            if (provider == null) {
+                // todo error report to user
+                return RedirectToAction("SignIn");
             }
 
-            if (model == null)
-                return HttpNotFound();
+            try {
+                var accessToken = provider.FinishAuthorization();
+                AuthModel model = null;
+                if (accessToken != null && !string.IsNullOrEmpty(accessToken.Item1)) {
+                    model = provider.GetAuthInfo(accessToken.Item1);
+                }
 
-            TempData["AuthModel"] = model;
-            return RedirectToAction("Info");
+                if (model == null) {
+                    // todo error report to user
+                    return RedirectToAction("SignIn");
+                }
+                model.ProviderId = id;
+
+                // lookup user
+                var user = this.RavenSession()
+                    .Query<User>()
+                    .FirstOrDefault(u => u.ExternalReferences.Any(r => r.ProviderId == id && r.Reference == model.Id));
+
+                if (user != null) {
+                    // found
+                    return RedirectToAction("Signin");
+                }
+                else {
+                    // create new
+                    TempData["ExternalReference"] = model;
+                    return RedirectToAction("Register");
+                }
+            }
+            catch (Exception) {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SignIn(SigninViewModel model)
+        {
+            return HttpNotFound();
+        }
+        #endregion
+
+
+
+        public ActionResult Index(string id)
+        {
+            var provider = GetProvider(id);
+            if (provider == null)
+                return View(Providers);
+
+            return provider.StartAuthorization(x => Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = x }));
         }
 
         public ActionResult Info()
@@ -59,6 +108,11 @@ namespace Hasse.Web.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult Register()
+        {
+            throw new NotImplementedException();
         }
     }
 
