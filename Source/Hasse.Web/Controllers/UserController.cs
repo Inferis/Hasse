@@ -38,9 +38,9 @@ namespace Hasse.Web.Controllers
 
             var accessToken = provider.FinishAuthorization();
             AuthModel model = null;
-            if (!string.IsNullOrEmpty(accessToken)) {
+            if (accessToken != null && !string.IsNullOrEmpty(accessToken.Item1)) {
                 // todo register access token
-                model = provider.GetAuthInfo(accessToken);
+                model = provider.GetAuthInfo(accessToken.Item1);
             }
 
             if (model == null)

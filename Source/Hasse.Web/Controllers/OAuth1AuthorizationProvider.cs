@@ -29,10 +29,13 @@ namespace Hasse.Web.Controllers
             return consumer.Channel.PrepareResponse(req).AsActionResult();
         }
 
-        public string FinishAuthorization()
+        public Tuple<string, DateTime> FinishAuthorization()
         {
             var response = GetConsumer().ProcessUserAuthorization();
-            return response != null ? response.AccessToken : null;
+            if (response != null && !string.IsNullOrEmpty(response.AccessToken)) {
+                return new Tuple<string, DateTime>(response.AccessToken, DateTime.MaxValue);
+            }
+            return null;
         }
 
         public string Id { get; private set; }

@@ -45,10 +45,13 @@ namespace Hasse.Web.Controllers
                 .AsActionResult();
         }
 
-        public string FinishAuthorization()
+        public Tuple<string, DateTime> FinishAuthorization()
         {
             var state = GetClient().ProcessUserAuthorization();
-            return state != null && !string.IsNullOrEmpty(state.AccessToken) ? state.AccessToken : null;
+            if (state != null && !string.IsNullOrEmpty(state.AccessToken)) {
+                return new Tuple<string, DateTime>(state.AccessToken, state.AccessTokenExpirationUtc.GetValueOrDefault(DateTime.Now));
+            }
+            return null;
         }
 
         public abstract AuthModel GetAuthInfo(string accessToken);

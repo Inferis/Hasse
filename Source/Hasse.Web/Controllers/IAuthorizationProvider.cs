@@ -7,7 +7,7 @@ namespace Hasse.Web.Controllers
     public interface IAuthorizationProvider
     {
         ActionResult StartAuthorization(Func<string, string> callbackGenerator);
-        string FinishAuthorization();
+        Tuple<string, DateTime> FinishAuthorization();
 
         string Id { get; }
         AuthModel GetAuthInfo(string accessToken);
