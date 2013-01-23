@@ -20,6 +20,8 @@ namespace Hasse.Models
         public string TwitterName { get; set; }
         public string FacebookUserName { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public List<UserReference> ExternalReferences { get; private set; }
 
         public void IntegrateExternalService(ExternalAuthenticationInfo info)

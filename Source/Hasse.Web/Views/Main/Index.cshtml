@@ -5,4 +5,15 @@
     Layout = "~/Views/Shared/SiteLayout.cshtml";
 }
 
-<p>New stuff</p>
+@if (Model.CanAddStory) {
+    <p><button>+ Verhaal</button></p>
+}
+
+@if (Model.Stories.Any()) {
+
+    foreach (var  story in Model.Stories) {}
+}
+else {
+    <p>Er zijn geen verhalen beschikbaar.</p>
+}
+

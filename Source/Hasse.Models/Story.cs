@@ -16,13 +16,13 @@ namespace Hasse.Models
         public string Title { get; set; }
         public string Slug { get; set; }
         public DateTime PostDate { get; set; }
-        public bool Visible { get; set; }
+        public StoryState State { get; set; }
 
         public DenormalizedReference<User> Author { get; set; }
         public DateTimeOffset CreatedDate { get; private set; }
         public DateTimeOffset UpdatedDate { get; set; }
         
-        public StoryProtection StoryProtection { get; set; }
+        public StoryProtection Protection { get; set; }
         public List<ExternalStoryReference> ExternalReferences { get; set; } 
 
         public List<Paragraph> Paragraphs { get; private set; }

@@ -50,6 +50,7 @@
     <Compile Include="Paragraph.cs" />
     <Compile Include="Story.cs" />
     <Compile Include="StoryProtection.cs" />
+    <Compile Include="StoryState.cs" />
     <Compile Include="TextParagraph.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
