@@ -1,16 +1,8 @@
 ﻿using System.Web.Mvc;
 using Raven.Client;
 
-namespace Hasse.Web
+namespace Hasse.Web.Extensions.Attributes
 {
-    public static class RavenSessionAccessor
-    {
-        public static IDocumentSession RavenSession(this ControllerBase controller)
-        {
-            return controller.TempData["RavenSession"] as IDocumentSession;
-        }
-    }
-
     public class RavenSessionAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)

@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.Mvc;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth;
+using Hasse.Common;
+using Hasse.Models;
 using Hasse.Web.Models;
 using Newtonsoft.Json.Linq;
 
@@ -39,7 +41,7 @@ namespace Hasse.Web.Authorization
         }
 
         public string Id { get; private set; }
-        public abstract AuthModel GetAuthInfo(string accessToken);
+        public abstract ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken);
 
         private WebConsumer GetConsumer()
         {

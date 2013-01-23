@@ -16,7 +16,7 @@ namespace Hasse.Web
     public class MvcApplication : System.Web.HttpApplication
     {
         public static DocumentStore Store;
-        
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -30,10 +30,21 @@ namespace Hasse.Web
 
         private void InitializeDocumentStore()
         {
-            Store = new DocumentStore { ConnectionStringName = "RavenDB" };
+            Store = new DocumentStore {
+                ConnectionStringName = "RavenDB",
+                Conventions = {
+                    IdentityPartsSeparator = "-",
+                    TransformTypeTagNameToDocumentKeyPrefix = RavenDBTransformTypeTagNameToDocumentKeyPrefix,
+                }
+            };
             Store.Initialize();
 
             IndexCreation.CreateIndexes(Assembly.GetCallingAssembly(), Store);
+        }
+
+        public static string RavenDBTransformTypeTagNameToDocumentKeyPrefix(string typeTagName)
+        {
+            return typeTagName.ToLowerInvariant();
         }
     }
 }

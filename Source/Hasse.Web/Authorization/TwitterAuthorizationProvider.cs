@@ -1,6 +1,8 @@
 ﻿using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
+using Hasse.Common;
+using Hasse.Models;
 using Hasse.Web.Models;
 
 namespace Hasse.Web.Authorization
@@ -26,11 +28,11 @@ namespace Hasse.Web.Authorization
             }
         }
 
-        public override AuthModel GetAuthInfo(string accessToken)
+        public override ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken)
         {
             var result = SignedCall("https://api.twitter.com/1.1/account/verify_credentials.json", accessToken);
 
-            return new AuthModel() {
+            return new ExternalAuthenticationInfo() {
                 AccessToken = accessToken,
                 Id = result.Value<string>("id"),
                 Username = result.Value<string>("screen_name"),

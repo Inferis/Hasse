@@ -1,5 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Hasse.Models;
+using Hasse.Web.Extensions.Attributes;
 
 namespace Hasse.Web
 {
@@ -11,5 +14,4 @@ namespace Hasse.Web
             filters.Add(new RavenSessionAttribute());
         }
     }
-
 }

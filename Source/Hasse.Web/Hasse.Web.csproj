@@ -139,7 +139,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\RavenSessionAttribute.cs" />
+    <Compile Include="Extensions\HasseControllerExtensions.cs" />
+    <Compile Include="Extensions\Attributes\RavenSessionAttribute.cs" />
     <Compile Include="Authorization\FacebookAuthorizationProvider.cs" />
     <Compile Include="Authorization\GithubAuthorizationProvider.cs" />
     <Compile Include="Authorization\GoogleAuthorizationProvider.cs" />
@@ -150,13 +151,16 @@
     <Compile Include="Authorization\OAuth2AuthorizationProvider.cs" />
     <Compile Include="Authorization\TwitterAuthorizationProvider.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Extensions\Attributes\LocalizedDisplayNameAttribute.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\Main\IndexViewModel.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Authorization\YahooAuthorizationProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthModel.cs" />
+    <Compile Include="Models\User\ProfileViewModel.cs" />
+    <Compile Include="Models\User\RegisterViewModel.cs" />
     <Compile Include="Models\User\ProviderViewModel.cs" />
     <Compile Include="Models\User\SigninViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -188,6 +192,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hasse.Common\Hasse.Common.csproj">
+      <Project>{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}</Project>
+      <Name>Hasse.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hasse.Models\Hasse.Models.csproj">
       <Project>{2c723589-cdb8-4d0c-aad7-1d7e9986351f}</Project>
       <Name>Hasse.Models</Name>
@@ -213,6 +221,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

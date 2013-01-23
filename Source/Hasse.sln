@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hasse.Web.Tests", "Hasse.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hasse.Models", "Hasse.Models\Hasse.Models.csproj", "{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hasse.Common", "Hasse.Common\Hasse.Common.csproj", "{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,6 @@
-﻿using Hasse.Web.Models;
+﻿using Hasse.Common;
+using Hasse.Models;
+using Hasse.Web.Models;
 
 namespace Hasse.Web.Authorization
 {
@@ -12,11 +14,11 @@ namespace Hasse.Web.Authorization
 
         public override string[] Scope { get { return new[] { "email", "publish_stream" }; } }
 
-        public override AuthModel GetAuthInfo(string accessToken)
+        public override ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken)
         {
             var graph = new Facebook.FacebookClient(accessToken);
             var me = graph.Get<dynamic>("me");
-            return new AuthModel {
+            return new ExternalAuthenticationInfo {
                 AccessToken = accessToken,
                 Id = me.id,
                 Username = me.username,

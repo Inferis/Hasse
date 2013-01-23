@@ -1,0 +1,16 @@
+﻿@model Hasse.Web.Models.User.ProfileViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/SiteLayout.cshtml";
+}
+
+@if (!Model.Found) {
+    <h2>Onbestaand</h2>
+    <p>Die gebruiker kunnen we niet vinden!</p>
+}
+else {
+    <p>@Model.Name</p>
+    <p>Email: @(Model.Email ?? "(verborgen)")</p>
+    <p>Website: @Model.Website</p>
+}

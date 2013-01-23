@@ -1,4 +1,6 @@
-﻿using Hasse.Web.Models;
+﻿using Hasse.Common;
+using Hasse.Models;
+using Hasse.Web.Models;
 
 namespace Hasse.Web.Authorization
 {
@@ -12,11 +14,11 @@ namespace Hasse.Web.Authorization
 
         public override string[] Scope { get { return new[] { "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email" }; } }
 
-        public override AuthModel GetAuthInfo(string accessToken)
+        public override ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken)
         {
             var result = SignedCall("https://www.googleapis.com/oauth2/v1/userinfo", accessToken);
 
-            return new AuthModel() {
+            return new ExternalAuthenticationInfo() {
                 AccessToken = accessToken,
                 Id = result.Value<string>("id"),
                 Username = null,

@@ -2,6 +2,8 @@
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
+using Hasse.Common;
+using Hasse.Models;
 using Hasse.Web.Models;
 
 namespace Hasse.Web.Authorization
@@ -22,7 +24,7 @@ namespace Hasse.Web.Authorization
             }
         }
 
-        public override AuthModel GetAuthInfo(string accessToken)
+        public override ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken)
         {
             var me = SignedCall("http://social.yahooapis.com/v1/me/guid?format=json", accessToken);
             var guid = me["guid"].Value<string>("value");
@@ -30,7 +32,7 @@ namespace Hasse.Web.Authorization
             var profile = SignedCall("http://social.yahooapis.com/v1/user/" + guid + "/profile?format=json", accessToken);
             var result = profile["profile"];
 
-            return new AuthModel() {
+            return new ExternalAuthenticationInfo() {
                 AccessToken = accessToken,
                 Id = result.Value<string>("guid"),
                 Username = result.Value<string>("nickname"),

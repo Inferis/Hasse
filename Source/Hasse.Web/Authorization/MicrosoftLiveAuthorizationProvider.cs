@@ -1,4 +1,6 @@
-﻿using Hasse.Web.Models;
+﻿using Hasse.Common;
+using Hasse.Models;
+using Hasse.Web.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Hasse.Web.Authorization
@@ -12,11 +14,11 @@ namespace Hasse.Web.Authorization
 
         public override string[] Scope { get { return new string[] { "wl.emails", "wl.basic" }; } }
 
-        public override AuthModel GetAuthInfo(string accessToken)
+        public override ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken)
         {
             var result = SignedCall("https://apis.live.net/v5.0/me", accessToken);
 
-            return new AuthModel() {
+            return new ExternalAuthenticationInfo() {
                 AccessToken = accessToken,
                 Id = result["id"].Value<string>(),
                 Username = null,

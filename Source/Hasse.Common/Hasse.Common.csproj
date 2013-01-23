@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2C723589-CDB8-4D0C-AAD7-1D7E9986351F}</ProjectGuid>
+    <ProjectGuid>{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hasse.Models</RootNamespace>
-    <AssemblyName>Hasse.Models</AssemblyName>
+    <RootNamespace>Hasse.Common</RootNamespace>
+    <AssemblyName>Hasse.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,27 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comment.cs" />
-    <Compile Include="DenormalizedReference.cs" />
-    <Compile Include="Identifiable.cs" />
-    <Compile Include="Image.cs" />
-    <Compile Include="ImageParagraph.cs" />
-    <Compile Include="Paragraph.cs" />
-    <Compile Include="Story.cs" />
-    <Compile Include="StoryProtection.cs" />
-    <Compile Include="TextParagraph.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="ExternalAuthenticationInfo.cs" />
+    <Compile Include="HasseRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserReference.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Hasse.Common\Hasse.Common.csproj">
-      <Project>{C28DE20B-178D-46C2-A8B3-FB1ADA94E009}</Project>
-      <Name>Hasse.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

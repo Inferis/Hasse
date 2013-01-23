@@ -1,0 +1,33 @@
+﻿@model Hasse.Web.Models.User.RegisterViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/SiteLayout.cshtml";
+}
+
+<h2>register</h2>
+
+<p>Je bent nieuw op onze site. Maak eerst je account aan:</p>
+@using (Html.BeginForm("Register", "User", FormMethod.Post)) {
+    @Html.HiddenFor(x => x.ProviderId)
+    @Html.HiddenFor(x => x.ProviderReference)
+    @Html.HiddenFor(x => x.TwitterScreenname)
+    @Html.HiddenFor(x => x.FacebookUsername)
+
+    <p>
+        @Html.LabelFor(x => x.Name) @Html.TextBoxFor(m => m.Name)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Email) @Html.TextBoxFor(m => m.Email)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Password) @Html.PasswordFor(m => m.Password)
+    </p>
+    <p>
+        @Html.LabelFor(x => x.ConfirmPassword) @Html.PasswordFor(m => m.ConfirmPassword)
+    </p>
+    <p>
+        <input type="submit" value="Registreren" />
+    </p>
+}
+

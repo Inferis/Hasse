@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth2;
+using Hasse.Common;
+using Hasse.Models;
 using Hasse.Web.Models;
 using Newtonsoft.Json.Linq;
 
@@ -54,9 +56,10 @@ namespace Hasse.Web.Authorization
             return null;
         }
 
-        public abstract AuthModel GetAuthInfo(string accessToken);
+        public abstract ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken);
 
         public string Id { get; private set; }
+
         public abstract string[] Scope { get; }
 
         protected JObject SignedCall(string uri, string accessToken, string accessTokenName = "access_token")

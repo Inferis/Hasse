@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-using Hasse.Web.Models;
+using Hasse.Common;
 
 namespace Hasse.Web.Authorization
 {
@@ -10,6 +10,6 @@ namespace Hasse.Web.Authorization
         Tuple<string, DateTime> FinishAuthorization();
 
         string Id { get; }
-        AuthModel GetAuthInfo(string accessToken);
+        ExternalAuthenticationInfo GetAuthenticationInfo(string accessToken);
     }
 }
