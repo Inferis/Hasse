@@ -135,6 +135,13 @@ namespace Hasse.Web.Controllers
             return Profile(id);
         }
 
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            this.AddInformation("Je bent niet langer ingelogd.");
+            return RedirectToAction("Index", "Main");
+        }
+
         public ActionResult Register()
         {
             if (User.Identity.IsAuthenticated)

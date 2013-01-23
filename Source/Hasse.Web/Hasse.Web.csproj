@@ -139,6 +139,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\AuthenticationViewStateAttribute.cs" />
     <Compile Include="Extensions\HasseControllerExtensions.cs" />
     <Compile Include="Extensions\Attributes\RavenSessionAttribute.cs" />
     <Compile Include="Authorization\FacebookAuthorizationProvider.cs" />

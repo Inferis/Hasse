@@ -7,6 +7,19 @@
 </head>
 <body>
     <div>
+        <h1>@Html.ActionLink("Kindjes.Net", "Index", "Main")</h1>
+
+        @if (ViewBag.IsAuthenticated) {
+            @ViewBag.AuthenticatedUserName @:- @Html.ActionLink("Profiel", "Index", "User") - @Html.ActionLink("Uitloggen", "SignOut", "User") 
+        }
+        else {
+            @Html.ActionLink("Inloggen", "SignIn", "User") 
+        }
+    </div>
+    
+    <hr/>
+
+    <div>
         @RenderBody()        
     </div>
 </body>
