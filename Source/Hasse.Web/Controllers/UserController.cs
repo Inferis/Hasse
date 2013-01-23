@@ -30,18 +30,22 @@ namespace Hasse.Web.Controllers
         #region Signin
         public ActionResult SignIn(string id)
         {
+            var user = this.AuthenticatedUser();
+
             var provider = GetProvider(id);
             if (provider == null) {
                 var model = new SigninViewModel() {
-                    Providers = Providers.Select(x => new ProviderViewModel() {
+                    Providers = Providers.Where(x => user == null || !user.ExternalReferences.Any(r => r.ProviderId == x.Id))
+                    .Select(x => new ProviderViewModel() {
                         Id = x.Id,
-                        Name = Translations.ResourceManager.GetString("provider_" + x.Id + "_name", Translations.Culture)
+                        Name = GetProviderName(x.Id)
                     }).ToList()
                 };
-                return View(model);
+
+                return View(user != null ? "AddExternalReference" : "SignIn", model);
             }
 
-            return provider.StartAuthorization(x => Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = x }));
+            return provider.StartAuthorization(x => (Request.Url.Scheme + "://" + Request.Url.Host + Url.Action("OAuthed", new { id = x })).ToLower());
         }
 
         public ActionResult OAuthed(string id)
@@ -49,7 +53,7 @@ namespace Hasse.Web.Controllers
             var provider = GetProvider(id);
             if (provider == null) {
                 // todo error report to user
-                return RedirectToAction("SignIn");
+                return RedirectToAction(User.Identity.IsAuthenticated ? "Index" : "SignIn");
             }
 
             try {
@@ -61,27 +65,49 @@ namespace Hasse.Web.Controllers
 
                 if (externalInfo == null) {
                     // todo error report to user
-                    return RedirectToAction("SignIn");
+                    return RedirectToAction(User.Identity.IsAuthenticated ? "Index" : "SignIn");
                 }
                 externalInfo.ProviderId = id;
 
-                // lookup user
-                var user = this.RavenSession()
-                    .Query<User>()
-                    .FirstOrDefault(u => u.ExternalReferences.Any(r => r.ProviderId == id && r.Reference == externalInfo.Id));
+                if (!User.Identity.IsAuthenticated) {
+                    // lookup user
+                    var user = this.RavenSession()
+                        .Query<User>()
+                        .FirstOrDefault(u => u.ExternalReferences.Any(r => r.ProviderId == id && r.Reference == externalInfo.Id));
 
-                if (user != null) {
-                    // found
+                    if (user != null) {
+                        // found
+                        user.IntegrateExternalService(externalInfo);
+                        this.RavenSession().Store(user);
+                        FormsAuthentication.SetAuthCookie(user.Id, true);
+
+                        return RedirectToAction("Index", "Main");
+                    }
+
+                    // create new
+                    TempData["ExternalAuthenticationInfo"] = externalInfo;
+                    return RedirectToAction("Register");
+                }
+                else {
+                    // find existing user to attach external info
+                    var user = this.AuthenticatedUser();
+
+                    // make sure another user is not already using this
+                    var existing = this.RavenSession()
+                        .Query<User>()
+                        .FirstOrDefault(u => u.ExternalReferences.Any(r => r.ProviderId == id && r.Reference == externalInfo.Id));
+
+                    if (existing != null && existing.Id != user.Id) {
+                        // todo error
+                        this.AddError("De " + GetProviderName(id) + " account is al aan een andere kindjes.net account gekoppeld");
+                        return RedirectToAction("Index", "Main");
+                    }
+
                     user.IntegrateExternalService(externalInfo);
                     this.RavenSession().Store(user);
-                    FormsAuthentication.SetAuthCookie(user.Id, true);
 
                     return RedirectToAction("Index", "Main");
                 }
-
-                // create new
-                TempData["ExternalAuthenticationInfo"] = externalInfo;
-                return RedirectToAction("Register");
             }
             catch (Exception) {
                 throw;
@@ -91,6 +117,9 @@ namespace Hasse.Web.Controllers
         [HttpPost]
         public ActionResult SignIn(SigninViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index");
+
             return HttpNotFound();
         }
         #endregion
@@ -108,6 +137,9 @@ namespace Hasse.Web.Controllers
 
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index");
+
             var info = TempData["ExternalAuthenticationInfo"] as ExternalAuthenticationInfo;
 
             RegisterViewModel model;
@@ -117,6 +149,7 @@ namespace Hasse.Web.Controllers
                     Email = info.Email,
                     Name = info.Name,
                     ProviderId = info.ProviderId,
+                    ProviderName = GetProviderName(info.ProviderId),
                     ProviderReference = info.Id,
                     TwitterScreenname = info.ProviderId == "twitter" ? info.Username : null,
                     FacebookUsername = info.ProviderId == "facebook" ? info.Username : null,
@@ -132,6 +165,9 @@ namespace Hasse.Web.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index");
+
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -171,11 +207,18 @@ namespace Hasse.Web.Controllers
                     Name = user.Name,
                     FacebookUserName = user.FacebookUserName,
                     TwitterUserName = user.TwitterName,
+                    Connections = user.ExternalReferences.Select(x => new ProfileViewModel.Connection { Id = x.ProviderId, Name = GetProviderName(x.ProviderId) }).ToList()
                 };
                 if (User.IsInRole(HasseRoles.Admin) || user.Id == User.Identity.Name)
                     model.Email = user.Email;
             }
             return View("Profile", model);
         }
+
+        private string GetProviderName(string id)
+        {
+            return Translations.ResourceManager.GetString("provider_" + id + "_name", Translations.Culture);
+        }
+
     }
 }

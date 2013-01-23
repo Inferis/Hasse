@@ -13,4 +13,13 @@ else {
     <p>@Model.Name</p>
     <p>Email: @(Model.Email ?? "(verborgen)")</p>
     <p>Website: @Model.Website</p>
+    
+    if (Model.Connections.Count > 0) {
+        <p>Verbonden via externe sites:</p>
+        <ul>
+        @foreach (var connection in Model.Connections) {
+            <li class="provider @connection.Id">@connection.Name</li>       
+        }
+        </ul>
+    }
 }

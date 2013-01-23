@@ -1,4 +1,6 @@
-﻿namespace Hasse.Web.Models.User
+﻿using System.Collections.Generic;
+
+namespace Hasse.Web.Models.User
 {
     public class ProfileViewModel
     {
@@ -9,5 +11,12 @@
         public string Email { get; set; }
         public string FacebookUserName { get; set; }
         public string TwitterUserName { get; set; }
+        public List<Connection> Connections { get; set; }
+
+        public class Connection {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
     }
+
 }

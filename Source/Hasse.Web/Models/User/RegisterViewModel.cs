@@ -19,7 +19,9 @@ namespace Hasse.Web.Models.User
 
         [LocalizedDisplayName("RegisterViewModel", "Website")]
         public string Website { get; set; }
+
         public string ProviderId { get; set; }
+        public string ProviderName { get; set; }
         public string ProviderReference { get; set; }
         public string TwitterScreenname { get; set; }
         public string FacebookUsername { get; set; }

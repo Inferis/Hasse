@@ -31,3 +31,7 @@
     </p>
 }
 
+@if (!string.IsNullOrEmpty(Model.ProviderId)) {
+    <p>Toch al een account? @Html.ActionLink("Log in", "SignIn") om je @Model.ProviderName account aan je kindjes.net account te koppelen.</p>
+}
+

@@ -1,0 +1,17 @@
+﻿@model Hasse.Web.Models.User.SigninViewModel
+
+@{
+    ViewBag.Title = "Externe account toevoegen";
+    Layout = "~/Views/Shared/SiteLayout.cshtml";
+}
+
+<h2>Externe account toevoegen</h2>
+
+<p>Je kan de volgende externe diensten toevoegen:</p>
+
+<ul>
+    @foreach (var provider in Model.Providers) {
+        <li>@Html.ActionLink(provider.Name, "Signin", new { id = provider.Id }, new { @class = "provider " + provider.Id })</li>
+    }
+</ul>
+
